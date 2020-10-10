@@ -229,3 +229,39 @@ def unwarp(warped, undist, Minv, left_fitx, right_fitx):
     result = cv2.addWeighted(undist, 1, newwarp, 0.3, 0)
     
     return result
+
+def calculateCurvature(fitx, fity):
+    xm_per_pix = 3.7/700
+    ym_per_pix = 30/720
+    
+    fitx *= xm_per_pix
+    fity *= ym_per_pix
+    
+    i = int(0.5*fitx.size)
+    
+    dxy = (fitx[i+1] - fitx[i-1]) / (fity[i+1] - fity[i-1])
+    ddxy = (fitx[i+1] - fitx[i]) / (fity[i+1] - fity[i])
+    ddxy -= ((fitx[i] - fitx[i-1]) / (fity[i] - fity[i-1]))
+    ddxy /= (fity[i+1] - fity[i-1])
+    
+    r_c = (1 + dxy**2)**1.5
+    r_c /= np.abs(ddxy)
+    
+    return r_c
+
+def calculateDisplacement(right_fitx, left_fitx):
+    img_center = 1280/2
+    lane_center = 0.5*(right_fitx[700] + left_fitx[700])
+    xm_per_pix = 3.7/700
+    return np.abs(lane_center - img_center)*xm_per_pix
+
+def addText(img, radius, displacement = 0.0):    
+    rad_line = "Curvature Radius: " + "{:.2f}".format(radius) + " m"
+    dis_line = "Displacement: " + "{:.2f}".format(displacement) + " m"
+    
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    cv2.putText(img, rad_line, (10, 70), font, 2.5, (255, 0, 0), 3)
+    cv2.putText(img, dis_line, (10, 140), font, 2.5, (255, 0, 0), 3)
+    
+    return img
+    
