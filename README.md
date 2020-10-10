@@ -9,3 +9,5 @@ The result can be seen in [project_output.mp4](./project_output.mp4).
 
 ## Discussion
 My image processing pipeline works quite well, but it produces lines, that sometimes jiggle a bit, especially in areas with a bright surface. This can be improved by implementing robustness measures, i.e. interpolating results from more than one frame. This would lead to smoothing of outputs. Also outliers could be detected more easily like that and thus be ignored. 
+
+On straight parts of the highway the results for the curvature radius jiggles a lot. I assume though, that that is because the radius goes towards infinity on straight lines. 
