@@ -1,39 +1,11 @@
-## Advanced Lane Finding
-[![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
+# Advanced Lane Finding
 
+## Project code 
+The code is devided in a [library](./lib.py) and an [IPython Notebook](./find_lanelines.ipynb). The [Notebook](./find_lanelines.ipynb) contains all information to understand the code structure on a high level. It also describes why I chose to use what functions, thresholds and algorithms in what order. My explanations are quite brief, because I think that a computer vision project should be explained with images rather than with words. That is why I provided an image for every processing step, showing the effect and necessity of the step.
 
-In this project, your goal is to write a software pipeline to identify the lane boundaries in a video, but the main output or product we want you to create is a detailed writeup of the project.  Check out the [writeup template](https://github.com/udacity/CarND-Advanced-Lane-Lines/blob/master/writeup_template.md) for this project and use it as a starting point for creating your own writeup.  
+The [library](./lib.py) contains mostly functions from the classroom with some modifications done by me. It also includes some helper functions. I decided to have almost all functions in the [library](./lib.py), because it makes the [Notebook](./find_lanelines.ipynb) nice and readable. The only function I kept in the [Notebook](./find_lanelines.ipynb) was the one that combines all processing steps taking a raw frame and returning an undistorted frame showing the lane, curvature radius and displacement. 
 
-Creating a great writeup:
----
-A great writeup should include the rubric points as well as your description of how you addressed each point.  You should include a detailed description of the code used in each step (with line-number references and code snippets where necessary), and links to other supporting documents or external references.  You should include images in your writeup to demonstrate how your code works with examples.  
+The result can be seen in [project_output.mp4](./project_output.mp4).
 
-All that said, please be concise!  We're not looking for you to write a book here, just a brief description of how you passed each rubric point, and references to the relevant code :). 
-
-You're not required to use markdown for your writeup.  If you use another method please just submit a pdf of your writeup.
-
-The Project
----
-
-The goals / steps of this project are the following:
-
-* Compute the camera calibration matrix and distortion coefficients given a set of chessboard images.
-* Apply a distortion correction to raw images.
-* Use color transforms, gradients, etc., to create a thresholded binary image.
-* Apply a perspective transform to rectify binary image ("birds-eye view").
-* Detect lane pixels and fit to find the lane boundary.
-* Determine the curvature of the lane and vehicle position with respect to center.
-* Warp the detected lane boundaries back onto the original image.
-* Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
-
-The images for camera calibration are stored in the folder called `camera_cal`.  The images in `test_images` are for testing your pipeline on single frames.  If you want to extract more test images from the videos, you can simply use an image writing method like `cv2.imwrite()`, i.e., you can read the video in frame by frame as usual, and for frames you want to save for later you can write to an image file.  
-
-To help the reviewer examine your work, please save examples of the output from each stage of your pipeline in the folder called `output_images`, and include a description in your writeup for the project of what each image shows.    The video called `project_video.mp4` is the video your pipeline should work well on.  
-
-The `challenge_video.mp4` video is an extra (and optional) challenge for you if you want to test your pipeline under somewhat trickier conditions.  The `harder_challenge.mp4` video is another optional challenge and is brutal!
-
-If you're feeling ambitious (again, totally optional though), don't stop there!  We encourage you to go out and take video of your own, calibrate your camera and show us how you would implement this project from scratch!
-
-## How to write a README
-A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
-
+## Discussion
+My image processing pipeline works quite well, but it produces lines, that sometimes jiggle a bit, especially in areas with a bright surface. This can be improved by implementing robustness measures, i.e. interpolating results from more than one frame. This would lead to smoothing of outputs. Also outliers could be detected more easily like that and thus be ignored. 
